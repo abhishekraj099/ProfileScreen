@@ -33,28 +33,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.profilescreen.AppRoute
 import com.example.profilescreen.R
 
 @Composable
 fun LoginScreen(navController: NavController) {
-
     val viewModel: SignInViewModel = hiltViewModel()
     val uiState = viewModel.state.collectAsState()
-
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-
-
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     val context = LocalContext.current
+
     LaunchedEffect(key1 = uiState.value) {
         when (uiState.value) {
             is SignInState.Success -> {
-                navController.navigate("home") {
-                    popUpTo("login") { inclusive = true } // Clear login/signup screens from backstack
+                navController.navigate(AppRoute.Home.route) {
+                    popUpTo(AppRoute.Login.route) { inclusive = true }
                 }
             }
             is SignInState.Error -> {

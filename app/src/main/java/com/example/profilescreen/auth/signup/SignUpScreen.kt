@@ -32,36 +32,30 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.profilescreen.AppRoute
 import com.example.profilescreen.R
 
 @Composable
 fun SignUpScreen(navController: NavController) {
     val viewModel: SignUpViewModel = hiltViewModel()
     val uiState = viewModel.state.collectAsState()
-    var name by remember {
-        mutableStateOf("")
-    }
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-    var confirm by remember {
-        mutableStateOf("")
-    }
+    var name by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirm by remember { mutableStateOf("") }
     val context = LocalContext.current
-    LaunchedEffect(key1 = uiState.value) {
 
+    LaunchedEffect(key1 = uiState.value) {
         when (uiState.value) {
             is SignUpState.Success -> {
-                navController.navigate("home")
+                // Navigate to Details Screen for new users
+                navController.navigate(AppRoute.Details.route) {
+                    popUpTo(AppRoute.SignUp.route) { inclusive = true }
+                }
             }
-
             is SignUpState.Error -> {
-                Toast.makeText(context, "Sign In failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Sign Up failed", Toast.LENGTH_SHORT).show()
             }
-
             else -> {}
         }
     }

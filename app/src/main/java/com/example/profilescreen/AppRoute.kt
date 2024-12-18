@@ -7,4 +7,5 @@ sealed class AppRoute(val route: String) {
     object Explore : AppRoute("explore")
     object Community : AppRoute("community")
     object Profile : AppRoute("profile")
+    object Details : AppRoute("details")
 }
